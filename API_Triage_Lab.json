@@ -1,0 +1,287 @@
+{
+  "uuid": "aadedf1c-56d5-41fe-9649-2bdb5b7fed99",
+  "lastMigration": 33,
+  "name": "API Triage Lab",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "6f5ac572-aa64-454f-9c0f-a4ff8f63be5f",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/v1/auth/login",
+      "responses": [
+        {
+          "uuid": "90e8d039-8bdd-4764-bb8b-e90a24050b96",
+          "body": "{\n  \"status\": \"authenticated\",\n  \"token\": \"fake-token-999\",\n  \"user\": \"101\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "username",
+              "value": "admin",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "secretsauce",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "1886be2d-be54-4d9c-bff2-bfdaf626081c",
+          "body": "{\n  \"error\": \"unauthorized\",\n  \"message\": \"Invalid Credentials\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "c5aecbe9-7b4e-4ba7-a09c-eaa6aaf6e521",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/users/:id",
+      "responses": [
+        {
+          "uuid": "eb438b62-9f22-4e90-a179-8b55fd5f4429",
+          "body": "{\n  \"id\": \"{{urlparam 'id'}}\",\n  \"username\": \"dschrute\",\n  \"role\": \"assistant to the regional manager\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "Bearer dummy-token-123",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "d780eecb-cff1-4484-9085-b84ea8e7248a",
+          "body": "{\n  \"error\": \"Forbidden\"'\n  \"message\": \"Missing or invalid Bearer token\"\n}",
+          "latency": 0,
+          "statusCode": 403,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "0500bfbd-4079-4c39-b847-945a9a8adeb3",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/v1/users/create",
+      "responses": [
+        {
+          "uuid": "8868586c-a21b-45dc-841b-03baea0a3cd5",
+          "body": "{\n  \"status\": \"created\",\n  \"message\": \"Dunder Mifflin user profile provisioned\"\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "email",
+              "value": ".+@.+\\..+",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "6fd22334-1c43-44be-96ea-691519224593",
+          "body": "{\n  \"error\": \"Bad Request\",\n  \"message\": \"Missing or malformed error field\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "2cbce6ff-5973-4646-b5ba-1998193bb972",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/analytics",
+      "responses": [
+        {
+          "uuid": "ee7b716c-1ab4-4306-b2d7-3dd6a2c6de1b",
+          "body": "{\n  \"error\": \"Internal Server Error\",\n  \"message\": \"Database query timeout after 3000ms\"\n}",
+          "latency": 3000,
+          "statusCode": 500,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "6f5ac572-aa64-454f-9c0f-a4ff8f63be5f"
+    },
+    {
+      "type": "route",
+      "uuid": "c5aecbe9-7b4e-4ba7-a09c-eaa6aaf6e521"
+    },
+    {
+      "type": "route",
+      "uuid": "0500bfbd-4079-4c39-b847-945a9a8adeb3"
+    },
+    {
+      "type": "route",
+      "uuid": "2cbce6ff-5973-4646-b5ba-1998193bb972"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

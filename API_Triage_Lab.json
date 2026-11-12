@@ -109,7 +109,7 @@
         },
         {
           "uuid": "d780eecb-cff1-4484-9085-b84ea8e7248a",
-          "body": "{\n  \"error\": \"Forbidden\"'\n  \"message\": \"Missing or invalid Bearer token\"\n}",
+          "body": "{\n  \"error\": \"Forbidden\",\n  \"message\": \"Missing or invalid Bearer token\"\n}",
           "latency": 0,
           "statusCode": 403,
           "label": "",

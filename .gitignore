@@ -1,9 +1,8 @@
-cat << 'EOF' > .gitignore
 *.log
 mockoon_api.log
 emergency_triage.log
 .DS_Store
 *.key
 *.pem
-EOF
+
 

@@ -21,6 +21,7 @@ I built this lab to simulate real-world API support and log triage. It runs a he
 - Pulled the resulting telemetry logs locally for Splunk ingestion and error-rate analysis.
 
 ![Postman Collection Runner Summary](./screenshots/postman_run.png)
+![Splunk Observability Dashboard](./screenshots/splunk_dashboard.png)
 
 ## Issues Hit & Fixes Along the Way
 - Dynamic IPs across different Wi-Fi networks: Without router admin access to set static IPs, the VM's address changed across networks. Installed `avahi-daemon` on Ubuntu and allowed UDP port `5353` in UFW so `api-server.local` resolves over mDNS anywhere.
